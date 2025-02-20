@@ -35,14 +35,17 @@ module.exports = {
             #swagger.summary = "Create User"
         */
     if (
-      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/.test(
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}$/.test(
         req?.body?.password
       )
     )
       throw new BadRequestError(
         "Password must be at least 8 characters long and contain at least one special character and  at least one uppercase character"
       );
-    const data = await User.create(req.body);
+
+    let data = await User.create(req.body);
+    data = data.toObject();
+    delete data.password;
 
     sendMail(
       data.email,
@@ -95,7 +98,7 @@ module.exports = {
     res.status(202).send({
       error: false,
       data,
-      new: await User.findOne({ _id: req.params.id }),
+      new: await User.findOne({ _id: req.params.id }).select("-password"),
     });
   },
 
