@@ -17,14 +17,24 @@ module.exports = {
                 </ul>
             `
         */
-
-    const data = await res.getModelList(Order, {}, ["userId", "pizzaId"]);
-
-    res.status(200).send({
-      error: false,
-      details: await res.getModelListDetails(Order),
-      data,
-    });
+    if (req.user.isAdmin) {
+      const data = await res.getModelList(Order, {}, ["userId", "pizzaId"]);
+      res.status(200).send({
+        error: false,
+        details: await res.getModelListDetails(Order),
+        data,
+      });
+    } else if (req.user.isActive) {
+      const data = await res.getModelList(Order, { userId: req.user._id }, [
+        "userId",
+        "pizzaId",
+      ]);
+      res.status(200).send({
+        error: false,
+        details: await res.getModelListDetails(Order, { userId: req.user._id }),
+        data,
+      });
+    }
   },
 
   create: async (req, res) => {

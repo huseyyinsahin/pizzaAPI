@@ -2,7 +2,9 @@
 
 const User = require("../models/user");
 const Token = require("../models/token");
+
 const passwordEncrypt = require("../helpers/passwordEncrypt");
+
 const {
   UnauthorizedError,
   BadRequestError,
@@ -32,7 +34,7 @@ module.exports = {
     if (!((username || email) && password))
       throw new BadRequestError("username/email and password are required");
 
-    const user = await User.findOne({ $or: [{ email }, { username }] });
+    let user = await User.findOne({ $or: [{ email }, { username }] });
     if (!user) throw new NotFoundError("username/email is not found");
 
     if (!user.isActive) throw new UnauthorizedError("This user is inactive");
@@ -71,6 +73,9 @@ module.exports = {
     const refreshToken = jwt.sign(refreshData, process.env.REFRESH_KEY, {
       expiresIn: process.env.REFRESH_EXP,
     });
+
+    user = user.toObject();
+    delete user.password;
 
     res.status(200).send({
       error: false,
