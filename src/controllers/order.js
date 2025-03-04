@@ -1,6 +1,8 @@
 "use strict";
 
 const Order = require("../models/order");
+const { UnauthorizedError } = require("../errors/customError");
+const order = require("../models/order");
 
 module.exports = {
   list: async (req, res) => {
@@ -42,20 +44,24 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Create Order"
         */
-    const data = await Order.create(req.body);
-    let newData = undefined;
+    if (req.body.userId == req.user._id) {
+      const data = await Order.create(req.body);
+      let newData = undefined;
 
-    if (data) {
-      newData = await Order.findOne({ _id: data.id }).populate([
-        "userId",
-        "pizzaId",
-      ]);
+      if (data) {
+        newData = await Order.findOne({ _id: data._id }).populate([
+          "userId",
+          "pizzaId",
+        ]);
+      }
+
+      res.status(201).send({
+        error: false,
+        newData,
+      });
+    } else {
+      throw new UnauthorizedError();
     }
-
-    res.status(201).send({
-      error: false,
-      newData,
-    });
   },
 
   read: async (req, res) => {
@@ -63,15 +69,25 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Get Single Order"
         */
-    const data = await Order.findOne({ _id: req.params.id }).populate([
-      "userId",
-      "pizzaId",
-    ]);
+    const userValidation = await Order.find({ userId: req.user._id });
 
-    res.status(200).send({
-      error: false,
-      data,
-    });
+    const orderUser = userValidation.some(
+      (order) => order._id.toString() == req.params.id
+    );
+
+    if (orderUser) {
+      const data = await Order.findOne({ _id: req.params.id }).populate([
+        "userId",
+        "pizzaId",
+      ]);
+
+      res.status(200).send({
+        error: false,
+        data,
+      });
+    } else {
+      throw new UnauthorizedError();
+    }
   },
 
   update: async (req, res) => {
@@ -79,16 +95,25 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Update Order"
         */
+    const userValidation = await Order.find({ userId: req.user._id });
 
-    const data = await Order.updateOne({ _id: req.params.id }, req.body, {
-      runValidators: true,
-    });
+    const orderUser = userValidation.some(
+      (order) => order._id.toString() == req.params.id
+    );
 
-    res.status(202).send({
-      error: false,
-      data,
-      new: await Order.findOne({ _id: req.params.id }),
-    });
+    if (orderUser && req.body.userId === req.user._id.toString()) {
+      const data = await Order.updateOne({ _id: req.params.id }, req.body, {
+        runValidators: true,
+      });
+
+      res.status(202).send({
+        error: false,
+        data,
+        new: await Order.findOne({ _id: req.params.id }),
+      });
+    } else {
+      throw new UnauthorizedError();
+    }
   },
 
   delete: async (req, res) => {
@@ -96,12 +121,21 @@ module.exports = {
             #swagger.tags = ["Orders"]
             #swagger.summary = "Delete Order"
         */
+    const userValidation = await Order.find({ userId: req.user._id });
 
-    const data = await Order.deleteOne({ _id: req.params.id });
+    const orderUser = userValidation.some(
+      (order) => order._id.toString() == req.params.id
+    );
 
-    res.status(data.deletedCount ? 204 : 404).send({
-      error: !data.deletedCount,
-      data,
-    });
+    if (orderUser) {
+      const data = await Order.deleteOne({ _id: req.params.id });
+
+      res.status(data.deletedCount ? 204 : 404).send({
+        error: !data.deletedCount,
+        data,
+      });
+    } else {
+      throw new UnauthorizedError();
+    }
   },
 };

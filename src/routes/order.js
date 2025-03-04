@@ -4,7 +4,10 @@ const router = require("express").Router();
 
 const order = require("../controllers/order");
 
-router.route("/").get(order.list).post(order.create);
+const { isLogin } = require("../middlewares/permissions");
+
+router.use(isLogin);
+router.route("/").get(isLogin, order.list).post(order.create);
 
 router
   .route("/:id")

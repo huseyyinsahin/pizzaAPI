@@ -7,10 +7,12 @@ const OrderSchema = new mongoose.Schema(
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     pizzaId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Pizza",
+      required: true,
     },
     size: {
       type: String,
