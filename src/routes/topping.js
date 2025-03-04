@@ -4,13 +4,15 @@ const router = require("express").Router();
 
 const topping = require("../controllers/topping");
 
-router.route("/").get(topping.list).post(topping.create);
+const { isAdmin } = require("../middlewares/permissions");
+
+router.route("/").get(topping.list).post(isAdmin, topping.create);
 
 router
   .route("/:id")
   .get(topping.read)
-  .put(topping.update)
-  .patch(topping.update)
-  .delete(topping.delete);
+  .put(isAdmin, topping.update)
+  .patch(isAdmin, topping.update)
+  .delete(isAdmin, topping.delete);
 
 module.exports = router;
