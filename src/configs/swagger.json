@@ -14,7 +14,10 @@
   },
   "host": "127.0.0.1:8000",
   "basePath": "/",
-  "schemes": ["http", "https"],
+  "schemes": [
+    "http",
+    "https"
+  ],
   "securityDefinitions": {
     "Token": {
       "type": "apiKey",
@@ -29,12 +32,18 @@
       "description": "JWT Authentication * Example: <b>Bearer ...accessToken...</b>"
     }
   },
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
   "paths": {
     "/auth/login": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Login",
         "description": "Login with username (or email) and password for get simpleToken and JWT",
         "parameters": [
@@ -66,7 +75,9 @@
     },
     "/auth/refresh": {
       "post": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "Refresh",
         "description": "Refresh with   for get accessToken",
         "parameters": [
@@ -99,7 +110,9 @@
     },
     "/auth/logout": {
       "get": {
-        "tags": ["Authentication"],
+        "tags": [
+          "Authentication"
+        ],
         "summary": "simpleToken: Logout",
         "description": "Delete token key.",
         "responses": {
@@ -111,7 +124,9 @@
     },
     "/user/": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "List Users",
         "description": "  You can send query with endpoint for filter[], search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
@@ -121,7 +136,9 @@
         }
       },
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Create User",
         "description": "",
         "responses": {
@@ -133,7 +150,9 @@
     },
     "/user/{id}": {
       "get": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Get Single User",
         "description": "",
         "parameters": [
@@ -151,7 +170,9 @@
         }
       },
       "put": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Update User",
         "description": "",
         "parameters": [
@@ -169,7 +190,9 @@
         }
       },
       "delete": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Delete User",
         "description": "",
         "parameters": [
@@ -190,7 +213,9 @@
         }
       },
       "patch": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Update User",
         "description": "",
         "parameters": [
@@ -210,7 +235,9 @@
     },
     "/token/": {
       "get": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "List Tokens",
         "description": "  You can send query with endpoint for filter[], search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
@@ -220,7 +247,9 @@
         }
       },
       "post": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "Create Token",
         "description": "",
         "responses": {
@@ -232,7 +261,9 @@
     },
     "/token/{id}": {
       "get": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "Get Single Token",
         "description": "",
         "parameters": [
@@ -250,7 +281,9 @@
         }
       },
       "put": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "Update Token",
         "description": "",
         "parameters": [
@@ -268,7 +301,9 @@
         }
       },
       "delete": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "Delete Token",
         "description": "",
         "parameters": [
@@ -289,7 +324,9 @@
         }
       },
       "patch": {
-        "tags": ["Tokens"],
+        "tags": [
+          "Tokens"
+        ],
         "summary": "Update Token",
         "description": "",
         "parameters": [
@@ -309,7 +346,9 @@
     },
     "/order/": {
       "get": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "List Orders",
         "description": "  You can send query with endpoint for filter[], search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
@@ -319,9 +358,25 @@
         }
       },
       "post": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Create Order",
         "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -331,7 +386,9 @@
     },
     "/order/{id}": {
       "get": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Get Single Order",
         "description": "",
         "parameters": [
@@ -349,7 +406,9 @@
         }
       },
       "put": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Update Order",
         "description": "",
         "parameters": [
@@ -358,6 +417,18 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -367,7 +438,9 @@
         }
       },
       "delete": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Delete Order",
         "description": "",
         "parameters": [
@@ -388,7 +461,9 @@
         }
       },
       "patch": {
-        "tags": ["Orders"],
+        "tags": [
+          "Orders"
+        ],
         "summary": "Update Order",
         "description": "",
         "parameters": [
@@ -397,6 +472,18 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "userId": {
+                  "example": "any"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -408,7 +495,9 @@
     },
     "/pizza/": {
       "get": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "List Pizzas",
         "description": "  You can send query with endpoint for filter[], search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
@@ -418,7 +507,9 @@
         }
       },
       "post": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "Create Pizza",
         "description": "",
         "parameters": [
@@ -444,7 +535,9 @@
     },
     "/pizza/{id}": {
       "get": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "Get Single Pizza",
         "description": "",
         "parameters": [
@@ -462,7 +555,9 @@
         }
       },
       "put": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "Update Pizza",
         "description": "",
         "parameters": [
@@ -480,7 +575,9 @@
         }
       },
       "delete": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "Delete Pizza",
         "description": "",
         "parameters": [
@@ -501,7 +598,9 @@
         }
       },
       "patch": {
-        "tags": ["Pizzas"],
+        "tags": [
+          "Pizzas"
+        ],
         "summary": "Update Pizza",
         "description": "",
         "parameters": [
@@ -521,7 +620,9 @@
     },
     "/topping/": {
       "get": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "List Toppings",
         "description": "  You can send query with endpoint for filter[], search[], sort[], page and limit.  <ul> Examples:   <li>URL/?<b>filter[field1]=value1&filter[field2]=value2</b></li>   <li>URL/?<b>search[field1]=value1&search[field2]=value2</b></li>   <li>URL/?<b>sort[field1]=1&sort[field2]=-1</b></li>   <li>URL/?<b>page=2&limit=1</b></li>  </ul>  ",
         "responses": {
@@ -531,7 +632,9 @@
         }
       },
       "post": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "Create Topping",
         "description": "",
         "responses": {
@@ -543,7 +646,9 @@
     },
     "/topping/{id}": {
       "get": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "Get Single Topping",
         "description": "",
         "parameters": [
@@ -561,7 +666,9 @@
         }
       },
       "put": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "Update Topping",
         "description": "",
         "parameters": [
@@ -579,7 +686,9 @@
         }
       },
       "delete": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "Delete Topping",
         "description": "",
         "parameters": [
@@ -600,7 +709,9 @@
         }
       },
       "patch": {
-        "tags": ["Toppings"],
+        "tags": [
+          "Toppings"
+        ],
         "summary": "Update Topping",
         "description": "",
         "parameters": [

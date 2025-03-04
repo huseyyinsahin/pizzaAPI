@@ -2,14 +2,6 @@
 
 const router = require("express").Router();
 
-router.all("/", (req, res) => {
-  res.send({
-    swagger: "/documents/swagger",
-    redoc: "/documents/redoc",
-    json: "/documents/json",
-  });
-});
-
 // JSON:
 router.use("/json", (req, res) => {
   res.sendFile(`/src/configs/swagger.json`, { root: "." });
