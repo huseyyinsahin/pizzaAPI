@@ -4,6 +4,8 @@ const router = require("express").Router();
 
 const pizza = require("../controllers/pizza");
 
+const { isAdmin } = require("../middlewares/permissions");
+
 const multer = require("multer");
 
 const upload = multer({
@@ -18,13 +20,13 @@ const upload = multer({
 router
   .route("/")
   .get(pizza.list)
-  .post(upload.array("image"), pizza.create);
+  .post(isAdmin, upload.array("image"), pizza.create);
 
 router
   .route("/:id")
   .get(pizza.read)
-  .put(upload.array("image"), pizza.update)
-  .patch(upload.array("image"), pizza.update)
-  .delete(pizza.delete);
+  .put(isAdmin, upload.array("image"), pizza.update)
+  .patch(isAdmin, upload.array("image"), pizza.update)
+  .delete(isAdmin, pizza.delete);
 
 module.exports = router;
