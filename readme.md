@@ -20,7 +20,7 @@ Aşağıdaki tabloda, PizzaAPI'nin sunduğu ana API endpointlerini ve her birini
 
 ### Giriş
 
-Kullanıcı girişi yapmak için `/auth/login` endpoint'ini kullanarak bir JWT token alabilirsiniz. Token, API'ye yapılacak diğer isteklerde doğrulama için gereklidir.
+Kullanıcı girişi yapmak için `/auth/login` endpoint'ini kullanarak bir token alabilirsiniz. Token, API'ye yapılacak diğer isteklerde doğrulama için gereklidir.
 
 ### Kayıt
 
